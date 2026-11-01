@@ -6,6 +6,8 @@ Escolha Windows, Mac Apple Silicon ou Mac Intel. Não é necessário entrar no G
 Os três instaladores e as somas de integridade estão nas versões deste repositório.
 
 A versão atual é uma **prévia de teste**. A conferência final da janela instalada no Windows ainda está pendente.
+O instalador Windows da prévia 5 tem assinatura própria, sem certificado comercial reconhecido pelo Windows.
+O SmartScreen pode continuar mostrando um aviso.
 O aplicativo inclui Node e as artes usadas; Claude Code ou Codex precisam estar instalados, com sua própria conta.
 Contas, credenciais e conversas de quem montou o aplicativo não acompanham os arquivos.
 
