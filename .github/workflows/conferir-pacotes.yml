@@ -1,0 +1,38 @@
+name: Conferir instaladores públicos
+on:
+  workflow_dispatch:
+    inputs:
+      versao:
+        description: 'Tag pública da prévia ou versão a conferir'
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  conferir:
+    if: github.repository == 'willian-29/escritorio-dos-agentes-downloads' && github.event.repository.private == false
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-15, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.22.1'
+      - name: Preparar WSL descartável no Windows
+        if: runner.os == 'Windows'
+        uses: Vampire/setup-wsl@4c48163d9f981914dd8caa0fc335fe19cca5bff4
+        with:
+          distribution: Ubuntu-22.04
+          wsl-version: 2
+          use-cache: false
+      - name: Conferir somente os instaladores finalizados
+        env:
+          ESCRITORIO_TAG: ${{ inputs.versao }}
+        shell: bash
+        run: node verificacoes/instalador.mjs "$ESCRITORIO_TAG"
